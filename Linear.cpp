@@ -31,8 +31,25 @@ int determinant(vector<vector<double>> matrix){
     else{
         int det=0;
         for(int i=0;i<matrix.size();i++){
-            
+             vector<vector<double>> submatrix;
+        for(int j=1;j< matrix.size(); j++) {
+            vector<double> row;
+            for(int k=0; k< matrix.size();k++) {
+                if(k==i) continue;
+                row.push_back(matrix[j][k]);
+            }
+            submatrix.push_back(row);
         }
+        double sign;
+        if (i%2==0){
+            sign=1.0;
+        } 
+        else{
+            sign=-1.0;
+        }
+        det += sign * matrix[0][i] * determinant(submatrix);
+    }
+    return det;
     }
 }
 
