@@ -7,7 +7,7 @@ using namespace std;
 
 struct matrixInfo{
         int row,col;
-        double* value;
+        vector<double> rhs;
 
 };
 
@@ -53,6 +53,19 @@ int determinant(vector<vector<double>> matrix){
     }
 }
 
+void printAugmentedMatrix(vector<vector<double>> matrix, vector<double> rhs) {
+    int size = matrix.size();
+    for (int i=0; i<size; i++) {
+        for (int j=0; j<matrix[i].size(); j++) {
+            cout << matrix[i][j] << "  ";
+        }
+        cout << "| " << rhs[i] << endl;
+    }
+    cout << endl;
+}
+
+
+
 vector<vector<double>> inverseMatrix(vector<vector<double>> matrix){
 
 }
@@ -75,6 +88,11 @@ void solveMatrix(vector<vector<double>> matrix){
     }
     tempfactor=xcancelled1[1]/xcancelled2[1];
     
+
+    double x,y,z;
+
+    cout << "Solution:" << endl;
+    cout << "x = " << x << ", y = " << y << ", z = " << z << endl;
 }
 
 int main() {
@@ -82,7 +100,7 @@ int main() {
     vector<vector<double>> matrix = /*makeMatrix(m)*/{{3.0,4.0,5.0}, 
     {2.0,3.0,4.0},
     {1,2,3}};
-    //matrix = 
+    vector<double> rhs = {8,11,-3};
     for(int i=0;i<matrix.size();i++){
         for(int j=0;j<matrix[i].size();j++){
             cout << matrix[i][j] << " ";
@@ -90,5 +108,5 @@ int main() {
         cout << "\n";
     }
     solveMatrix(matrix);
-
+    printAugmentedMatrix(matrix,rhs);
 }
