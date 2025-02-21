@@ -66,9 +66,9 @@ void printAugmentedMatrix(vector<vector<double>> matrix, vector<double> rhs) {
 
 
 
-vector<vector<double>> inverseMatrix(vector<vector<double>> matrix){
+/*vector<vector<double>> inverseMatrix(vector<vector<double>> matrix){
 
-}
+}*/
 
 void solveMatrix(vector<vector<double>> matrix,vector<double> rhs){
     int n = 3;
@@ -110,9 +110,9 @@ void solveMatrix(vector<vector<double>> matrix,vector<double> rhs){
 
 int main() {
     matrixInfo m = makeMatrixInfo(3,3);
-    vector<vector<double>> matrix = /*makeMatrix(m)*/{{3.0,4.0,5.0}, 
-    {2.0,3.0,4.0},
-    {1,2,3}};
+    vector<vector<double>> matrix = /*makeMatrix(m)*/{{8,3,5}, 
+    {1,6,8},
+    {5,2,3}};
     vector<double> rhs = {8,11,-3};
     for(int i=0;i<matrix.size();i++){
         for(int j=0;j<matrix[i].size();j++){
@@ -120,6 +120,6 @@ int main() {
         }
         cout << "\n";
     }
-    solveMatrix(matrix);
+    solveMatrix(matrix,rhs);
     printAugmentedMatrix(matrix,rhs);
 }
