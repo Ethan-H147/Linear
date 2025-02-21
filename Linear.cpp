@@ -57,9 +57,11 @@ int determinant(vector<vector<double>> matrix){
 /*prints the matrix and the right hand side separated by |*/
 void printAugmentedMatrix(vector<vector<double>> matrix, vector<double> rhs) {
     int size = matrix.size();
-    for (int i=0; i<size; i++) {//nested loop, simply mechanics
-        for (int j=0; j<matrix[i].size(); j++) {
-            cout << matrix[i][j] << "  ";
+    for (int i = 0; i < size; i++) {
+        double* pRow = &matrix[i][0];// get a pointer to the row's first element
+        int rowSize = matrix[i].size();
+        for (int j = 0; j < rowSize; j++) {//nested loop to combine the lhs with the rhs
+            cout << *(pRow + j) << "  ";
         }
         cout << "| " << rhs[i] << endl;
     }
