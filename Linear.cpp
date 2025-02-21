@@ -70,27 +70,40 @@ vector<vector<double>> inverseMatrix(vector<vector<double>> matrix){
 
 }
 
-void solveMatrix(vector<vector<double>> matrix){
-    double tempfactor = matrix[0][0]/matrix[1][0];
-    vector<double> temp = {matrix[1][0]*tempfactor,matrix[1][1]*tempfactor,matrix[1][2]*tempfactor};
-    
-    vector<double> xcancelled1 = {matrix[0][0]-temp[0],matrix[0][1]-temp[1],matrix[0][2]-temp[2]};
-    for(int j=0;j<3;j++){
-        cout << xcancelled1[j] << " ";
+void solveMatrix(vector<vector<double>> matrix,vector<double> rhs){
+    int n = 3;
+    cout << "Augmented Matrix:" <<endl;
+    printAugmentedMatrix(matrix, rhs);
+    double tempfactor = matrix[1][0]/matrix[0][0];
+    vector<double> xcancelled1(n);
+    for (int i=0; i<n; i++){
+        xcancelled1[i] = matrix[1][i] - tempfactor * matrix[0][i];
     }
-    cout << endl;
-    tempfactor = matrix[0][0]/matrix[2][0];
-    temp = {matrix[2][0]*tempfactor,matrix[2][1]*tempfactor,matrix[2][2]*tempfactor};
-    cout << endl;
-    vector<double> xcancelled2 = {matrix[0][0]-temp[0],matrix[0][1]-temp[1],matrix[0][2]-temp[2]};
-    for(int j=0;j<3;j++){
-        cout << xcancelled2[j] << " ";
+    double rhs1 = rhs[1] - tempfactor * rhs[0];
+    tempfactor = matrix[2][0] / matrix[0][0];
+    vector<double> xcancelled2(n);
+    for (int j=0; j<n; j++){
+        xcancelled2[j] = matrix[2][j] - tempfactor * matrix[0][j];
     }
-    tempfactor=xcancelled1[1]/xcancelled2[1];
-    
-
+    double rhs2 = rhs[2] - tempfactor * rhs[0];
+    vector<vector<double>> matrixXcancelled = {matrix[0], xcancelled1, xcancelled2};
+    vector<double> rhsAfterFirst = { rhs[0], rhs1, rhs2 };
+    cout << "After eliminating x:" << endl;
+    printAugmentedMatrix(matrixXcancelled, rhsAfterFirst);
+    tempfactor = xcancelled2[1] / xcancelled1[1];
+    vector<double> ycancelled2(n);
+    for (int j = 0; j < n; j++){
+        ycancelled2[j] = xcancelled2[j]-tempfactor*xcancelled1[j];
+    }
+    double rhs2final = rhs2 - tempfactor * rhs1;
+    vector<vector<double>> matrixAfterSecond = { matrix[0], xcancelled1, ycancelled2 };
+    vector<double> rhsAfterSecond = { rhs[0], rhs1, rhs2final };
+    cout << "After eliminating y:" << endl;
+    printAugmentedMatrix(matrixAfterSecond, rhsAfterSecond);
     double x,y,z;
-
+    z = rhs2final/ycancelled2[2];
+    y = (rhs1-xcancelled1[2] * z)/xcancelled1[1];
+    x = (rhs[0]-matrix[0][1] * y-matrix[0][2] * z)/matrix[0][0];
     cout << "Solution:" << endl;
     cout << "x = " << x << ", y = " << y << ", z = " << z << endl;
 }
